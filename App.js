@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from 'react'
 import Buttonclick from './Components/buttonclick';
-
+import Textclick from './Components/textclick';
 class App extends PureComponent {
   constructor(props) {
     super(props)
@@ -12,8 +12,9 @@ class App extends PureComponent {
 
   render() {
     return (
-      <div className="App">
+      <div>
         <Buttonclick />
+        <Textclick />
       </div>
     );
   }

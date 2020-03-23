@@ -1,42 +1,39 @@
-import React, { Component } from "react";
-import Aux from "./../hoc/aux";
+import React, { Component } from 'react'
 import {connect} from 'react-redux';
+import {increment,storeResult,deleteresult} from "./../store/actions/action";
 class Buttonclick extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      
-    }
+  constructor(props) {
+    super(props)
+
   }
-  show = () =>{
-    console.log(this.props.ctr);
-  }
+
   render() {
-  return(
-  <div>
-    <button onClick={this.props.onIncrement}>{this.props.ctr}</button>
-    <button onClick = {this.props.onStoreResult}>Store Result</button>
-    <ul>
-      {this.props.storedResult.map(item => {
-      return(<li key = {item.id} onClick={() => this.props.onDeleteResult(item.id)}>{item.value}</li>)
-      })}
-    </ul>
-  </div>
-  )
+    return (
+      <div>
+  <button onClick = {this.props.onIncrement}>{this.props.count}</button>
+  <button onClick = {() => this.props.onStore(this.props.count)}>Store</button>
+        <ul>
+          {this.props.arr.map(item => {
+          return <li key={item.id}onClick = {() => this.props.onDelete(item.id)}>{item.value}</li>
+          })}
+        </ul>
+      </div>
+    );
   }
 }
-const mapStatetoProps = (state) => {
-  return {
-    ctr : state.counter,
-    storedResult :state.result
+const getValue = state => {
+  return{
+    count : state.count,
+    arr : state.result
   }
+
 }
-const dispatchToProps = dispatch => {
+const sendValue = dispatch =>{
   return {
-    onIncrement : () => dispatch({type:"INCREMENT"}),
-    onStoreResult : () => dispatch({type:"STORE_RESULT"}),
-    onDeleteResult : (id) => dispatch({type:"DELETE_RESULT",Id:id})
-}
+    onIncrement  : () => dispatch(increment()),
+    onStore : (value) => dispatch(storeResult(value)),
+    onDelete : (id) => dispatch(deleteresult(id))
+  }
 }
 
-export default connect(mapStatetoProps,dispatchToProps)(Buttonclick);
+export default connect(getValue,sendValue)(Buttonclick);
